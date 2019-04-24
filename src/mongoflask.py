@@ -27,4 +27,12 @@ def find_restaurants(mongo, _id=None):
     query = {}
     if _id:
         query["_id"] = ObjectId(_id)
+        try:
+            restaurant = mongo.db.restaurant.find_one(query)
+            if restaurant:
+                return restaurant
+            else:
+                return ('', 204)
+        except Exception as e:
+            raise e
     return list(mongo.db.restaurant.find(query))
